@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iza.dao.TransDao">
+    <update id="updateAddMoney" parameterType="map"  >
+        update t_user set balance = balance + #{num} where bankCode = #{in}
+    </update>
+
+    <update id="updateSubMoney" parameterType="map"  >
+        update t_user set balance = balance - #{num} where bankCode = #{out}
+    </update>
+</mapper>

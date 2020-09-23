@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="layui/css/layui.css">
+</head>
+<body>
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">转入账户</label>
+        <div class="layui-input-inline">
+            <input type="text" name="otherCode" lay-verify="title" autocomplete="off" placeholder="请输入账户号码" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">金额</label>
+        <div class="layui-input-inline">
+            <input type="text" name="money" lay-verify="title" autocomplete="off" placeholder="请输入金额" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置
+                <i class="layui-icon layui-icon-face-smile" style="font-size: 30px; color: #1E9FFF;"></i>
+            </button>
+        </div>
+    </div>
+</form>
+<center>
+    <div id="info"></div>
+</center>
+<script src="layui/layui.js"></script>
+<script type="text/javascript" src="js/jquery-1.12.2.min.js"></script>
+<script>
+
+    layui.use(['form'], function() {
+        var form = layui.form;
+
+        form.on('submit(demo1)', function (data) {
+
+            $.ajax({
+                type:"post",
+                url:"trade/transfer.do",
+                data:data.field,
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 1) {
+                        $("#info").html("<font color='green'>转账成功</font>");
+                    }else{
+                        $("#info").html("<font color='red'>转账失败</font>");
+                    }
+                },
+                error:function () {
+                    $("#info").html("<font color='red'>网络错误，请稍后再试</font>");
+                }
+
+            });
+            return false;
+
+
+        });
+
+    });
+
+    // $("form").submit(function () {
+    //     $.ajax({
+    //         type:"post",
+    //         url:"trade/transfer.do",
+    //         data:$("form").serialize(),
+    //         success:function (data) {
+    //             alert(data.info)
+    //         }
+    //     })
+    //     return false;
+    // })
+</script>
+</body>
+</html>

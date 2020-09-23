@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="layui/css/layui.css">
+</head>
+<body>
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">原密码</label>
+        <div class="layui-input-inline">
+            <input type="text" name="oldPassword" lay-verify="title" autocomplete="off" placeholder="请输入原密码" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">新密码</label>
+        <div class="layui-input-inline">
+            <input type="text" name="newPassword" lay-verify="title" autocomplete="off" placeholder="请输入新密码" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置
+                <i class="layui-icon layui-icon-face-smile" style="font-size: 30px; color: #1E9FFF;"></i>
+            </button>
+        </div>
+    </div>
+</form>
+<center>
+    <div id="info"></div>
+</center>
+<script src="layui/layui.js"></script>
+<script type="text/javascript" src="js/jquery-1.11.0.js"></script>
+<script>
+
+    layui.use(['form', 'layedit', 'laydate'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate;
+
+        //日期
+        laydate.render({
+            elem: '#date'
+        });
+        laydate.render({
+            elem: '#date1'
+        });
+        form.on('submit(demo1)', function (data) {
+
+            $.ajax({
+                type:"post",
+                url:"change.do",
+                data:data.field,
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 1) {
+                        $("#info").html("<font color='green'>修改成功</font>");
+                    }else{
+                        $("#info").html("<font color='red'>修改失败</font>");
+                    }
+                },
+                error:function () {
+                    $("#info").html("<font color='red'>网络错误，请稍后再试</font>");
+                }
+
+            });
+           return false;
+
+
+        });
+
+    });
+
+
+</script>
+</body>
+</html>
